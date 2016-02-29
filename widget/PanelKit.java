@@ -90,7 +90,7 @@ public class PanelKit {
 
         enterButton.addActionListener(e -> {
             String text = textField.getText();
-            findItemAndSelectItRadioButton(group.getElements(), text);
+            findItemAndSelectItRadioButton(group, text);
         });
 
         panel.setLayout(new GridLayout(0,3,10,20));
@@ -228,13 +228,15 @@ public class PanelKit {
         popUpMessage("There is no one!");
     }
 
-    private void findItemAndSelectItRadioButton(Enumeration<AbstractButton> buttonsModels, String text) {
+    private void findItemAndSelectItRadioButton(ButtonGroup group, String text) {
+        Enumeration<AbstractButton> buttonsModels = group.getElements();
+
         while (buttonsModels.hasMoreElements()) {
             AbstractButton element = buttonsModels.nextElement();
             if (element.getText().equals(text)) {
                 ButtonModel buttonModel = element.getModel();
                 if (buttonModel.isSelected()) {
-                    buttonModel.setSelected(false);
+                    group.clearSelection();
                     return;
                 }
                 buttonModel.setSelected(true);
