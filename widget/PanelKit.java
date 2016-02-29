@@ -154,11 +154,11 @@ public class PanelKit {
         });
 
         toSecondColumn.addActionListener(e -> {
-            changeColum(table,  model, 1);
+            changeColumn(table,  model, 1);
         });
 
         toFirstColumn.addActionListener(e -> {
-            changeColum(table,  model, 0);
+            changeColumn(table,  model, 0);
         });
 
         gridPanel.add(textField);
@@ -175,7 +175,9 @@ public class PanelKit {
         return panel;
     }
 
-    private void changeColum(JTable table, DefaultTableModel model, int toColumnNumber) {
+
+
+    private void changeColumn(JTable table, DefaultTableModel model, int toColumnNumber) {
         int rowNumber    = table.getSelectedRow();
         int columnNumber = table.getSelectedColumn();
 
@@ -226,7 +228,7 @@ public class PanelKit {
         while (buttonsModels.hasMoreElements()) {
             AbstractButton element = buttonsModels.nextElement();
             if (element.getText().equals(text)) {
-                element.getModel().setSelected(true);
+                changeSelectionRadioButton(element.getModel());
                 return;
             }
         }
@@ -236,6 +238,14 @@ public class PanelKit {
 
     private void popUpMessage(String message) {
         JOptionPane.showMessageDialog(this.frame, message);
+    }
+
+    private void changeSelectionRadioButton(ButtonModel buttonModel) {
+        if(buttonModel.isSelected()) {
+            buttonModel.setSelected(false);
+            return;
+        }
+        buttonModel.setSelected(true);
     }
 
 }
