@@ -5,7 +5,6 @@ class Main {
 
     public Main() {
         PanelKit panelKit = new PanelKit();
-
         new MainFrame(panelKit);
     }
 

@@ -216,6 +216,10 @@ public class PanelKit {
     private void findItemAndSelectItCheckBox(ArrayList<JCheckBox> checkBoxes, String text){
         for (JCheckBox cb : checkBoxes) {
             if (cb.getText().equals(text)) {
+                if (cb.isSelected()) {
+                    cb.setSelected(false);
+                    return;
+                }
                 cb.setSelected(true);
                 return;
             }
@@ -228,7 +232,12 @@ public class PanelKit {
         while (buttonsModels.hasMoreElements()) {
             AbstractButton element = buttonsModels.nextElement();
             if (element.getText().equals(text)) {
-                changeSelectionRadioButton(element.getModel());
+                ButtonModel buttonModel = element.getModel();
+                if (buttonModel.isSelected()) {
+                    buttonModel.setSelected(false);
+                    return;
+                }
+                buttonModel.setSelected(true);
                 return;
             }
         }
@@ -238,14 +247,6 @@ public class PanelKit {
 
     private void popUpMessage(String message) {
         JOptionPane.showMessageDialog(this.frame, message);
-    }
-
-    private void changeSelectionRadioButton(ButtonModel buttonModel) {
-        if(buttonModel.isSelected()) {
-            buttonModel.setSelected(false);
-            return;
-        }
-        buttonModel.setSelected(true);
     }
 
 }
