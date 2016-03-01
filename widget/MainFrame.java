@@ -13,8 +13,17 @@ public class MainFrame {
         this.frame = new JFrame();
         ArrayList<JPanel> panels = panelKit.getAllPanels(frame);
 
+        initializeFrameSettings();
         useUIManager();
         initUI(panels);
+    }
+
+    private void initializeFrameSettings () {
+        frame.setTitle("Widget by Vlad");
+        frame.setBounds(500,500,500,300);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     private void initUI(ArrayList<JPanel> panels) {
@@ -30,12 +39,6 @@ public class MainFrame {
 
         mainPanel.add(tabbedPane);
         frame.add(mainPanel);
-
-        frame.setTitle("Widget by Vlad");
-        frame.setBounds(500,500,500,300);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setResizable(false);
     }
 
     private void useUIManager() {
