@@ -4,11 +4,14 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class MainFrame extends JFrame {
+public class MainFrame {
+
+    private JFrame frame;
 
     public MainFrame(PanelKit panelKit) {
 
-        ArrayList<JPanel> panels = panelKit.getAllPanels(this);
+        this.frame = new JFrame();
+        ArrayList<JPanel> panels = panelKit.getAllPanels(frame);
 
         useUIManager();
         initUI(panels);
@@ -26,13 +29,13 @@ public class MainFrame extends JFrame {
             tabbedPane.addTab(tabsNames[i], panels.get(i));
 
         mainPanel.add(tabbedPane);
-        this.add(mainPanel);
+        frame.add(mainPanel);
 
-        this.setTitle("Widget by Vlad");
-        this.setBounds(500,500,500,300);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setVisible(true);
-        this.setResizable(false);
+        frame.setTitle("Widget by Vlad");
+        frame.setBounds(500,500,500,300);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     private void useUIManager() {
@@ -41,7 +44,7 @@ public class MainFrame extends JFrame {
             UIManager.put("swing.boldMetal", Boolean.FALSE);
         } catch (Exception ex) {
             ex.printStackTrace();
-            dispose();
+            frame.dispose();
         }
     }
 }
