@@ -18,7 +18,7 @@ public class MainFrame {
         initUI(panels);
     }
 
-    private void initializeFrameSettings () {
+    private void initializeFrameSettings() {
         frame.setTitle("Widget by Vlad");
         frame.setBounds(500,500,500,300);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
