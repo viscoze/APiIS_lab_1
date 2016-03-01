@@ -44,6 +44,11 @@ public class PanelKitHelper {
 
     public void addItem(DefaultComboBoxModel model, JTextField textField) {
         String text = textField.getText();
+        if (text.equals("")) {
+            popUpMessage("Enter something!");
+            return;
+        }
+
         if (model.getIndexOf(text) == -1) {
             model.addElement(text);
             textField.setText("");
