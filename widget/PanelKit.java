@@ -144,8 +144,7 @@ public class PanelKit {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         JTable table            = new JTable(model);
 
-        toTable.addActionListener(e -> {
-            helper.addToRow(1, textField, model);
+        toTable.addActionListener(e -> {            helper.addToRow(1, textField, model);
         });
 
         toSecondColumn.addActionListener(e -> {
