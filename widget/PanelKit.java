@@ -34,7 +34,7 @@ public class PanelKit {
         JComboBox<String> comboBox   = new JComboBox<>(model);
 
         enterButton.addActionListener(e -> {
-            addItem(model, textField.getText());
+            addItem(model, textField);
         });
 
         panel.add(textField);
@@ -89,8 +89,7 @@ public class PanelKit {
         }
 
         enterButton.addActionListener(e -> {
-            String text = textField.getText();
-            findItemAndSelectItRadioButton(group, text);
+            findItemAndSelectItRadioButton(group, textField);
         });
 
         panel.setLayout(new GridLayout(0,3,10,20));
@@ -117,8 +116,7 @@ public class PanelKit {
         }
 
         enterButton.addActionListener(e -> {
-            String text = textField.getText();
-            findItemAndSelectItCheckBox(checkBoxes, text);
+            findItemAndSelectItCheckBox(checkBoxes, textField);
         });
 
         panel.setLayout(new GridLayout(0,3,10,20));
@@ -149,8 +147,7 @@ public class PanelKit {
         JTable table            = new JTable(model);
 
         toTable.addActionListener(e -> {
-            String text = textField.getText();
-            addToRow(1, text, model);
+            addToRow(1, textField, model);
         });
 
         toSecondColumn.addActionListener(e -> {
@@ -187,7 +184,8 @@ public class PanelKit {
         model.setValueAt(text, rowNumber, toColumnNumber);
     }
 
-    private void addToRow(int columnCount, String text, DefaultTableModel model) {
+    private void addToRow(int columnCount, JTextField textField, DefaultTableModel model) {
+        String text  = textField.getText();
         int rowCount = model.getRowCount();
         columnCount -= 1;
 
@@ -205,15 +203,18 @@ public class PanelKit {
         model.setValueAt(text, rowCount-1, columnCount);
     }
 
-    private void addItem(DefaultComboBoxModel model, String text) {
+    private void addItem(DefaultComboBoxModel model, JTextField textField) {
+        String text = textField.getText();
         if (model.getIndexOf(text) == -1) {
             model.addElement(text);
+            textField.setText("");
         } else {
             popUpMessage("There is already one!");
         }
     }
 
-    private void findItemAndSelectItCheckBox(ArrayList<JCheckBox> checkBoxes, String text){
+    private void findItemAndSelectItCheckBox(ArrayList<JCheckBox> checkBoxes, JTextField textField){
+        String text = textField.getText();
         for (JCheckBox cb : checkBoxes) {
             if (cb.getText().equals(text)) {
                 if (cb.isSelected()) {
@@ -228,7 +229,8 @@ public class PanelKit {
         popUpMessage("There is no one!");
     }
 
-    private void findItemAndSelectItRadioButton(ButtonGroup group, String text) {
+    private void findItemAndSelectItRadioButton(ButtonGroup group, JTextField textField) {
+        String text = textField.getText();
         Enumeration<AbstractButton> buttonsModels = group.getElements();
 
         while (buttonsModels.hasMoreElements()) {
