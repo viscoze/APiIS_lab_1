@@ -8,12 +8,11 @@ import java.util.Enumeration;
 
 public class PanelKit {
 
-    private JFrame frame;
+    private PanelKitHelper helper;
 
     public ArrayList<JPanel> getAllPanels(JFrame frame) {
 
-        this.frame = frame;
-
+        this.helper = new PanelKitHelper(frame);
         ArrayList<JPanel> allPanels = new ArrayList<>();
 
         allPanels.add(createWidgetComboBox());
@@ -34,7 +33,7 @@ public class PanelKit {
         JComboBox<String> comboBox   = new JComboBox<>(model);
 
         enterButton.addActionListener(e -> {
-            addItem(model, textField);
+            helper.addItem(model, textField);
         });
 
         panel.add(textField);
@@ -89,7 +88,7 @@ public class PanelKit {
         }
 
         enterButton.addActionListener(e -> {
-            findItemAndSelectItRadioButton(group, textField);
+            helper.findItemAndSelectItRadioButton(group, textField);
         });
 
         panel.setLayout(new GridLayout(0,3,10,20));
@@ -116,7 +115,7 @@ public class PanelKit {
         }
 
         enterButton.addActionListener(e -> {
-            findItemAndSelectItCheckBox(checkBoxes, textField);
+            helper.findItemAndSelectItCheckBox(checkBoxes, textField);
         });
 
         panel.setLayout(new GridLayout(0,3,10,20));
@@ -147,15 +146,15 @@ public class PanelKit {
         JTable table            = new JTable(model);
 
         toTable.addActionListener(e -> {
-            addToRow(1, textField, model);
+            helper.addToRow(1, textField, model);
         });
 
         toSecondColumn.addActionListener(e -> {
-            changeColumn(table,  model, 1);
+            helper.changeColumn(table,  model, 1);
         });
 
         toFirstColumn.addActionListener(e -> {
-            changeColumn(table,  model, 0);
+            helper.changeColumn(table,  model, 0);
         });
 
         gridPanel.add(textField);
@@ -170,87 +169,6 @@ public class PanelKit {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         return panel;
-    }
-
-
-
-    private void changeColumn(JTable table, DefaultTableModel model, int toColumnNumber) {
-        int rowNumber    = table.getSelectedRow();
-        int columnNumber = table.getSelectedColumn();
-
-        String text = (String) model.getValueAt(rowNumber, columnNumber);
-
-        model.setValueAt("", rowNumber, columnNumber);
-        model.setValueAt(text, rowNumber, toColumnNumber);
-    }
-
-    private void addToRow(int columnCount, JTextField textField, DefaultTableModel model) {
-        String text  = textField.getText();
-        int rowCount = model.getRowCount();
-        columnCount -= 1;
-
-        if (rowCount == 6) {
-            popUpMessage("Enough!");
-            return;
-        }
-
-        if (text.equals("")) {
-            popUpMessage("Text field is empty!");
-            return;
-        }
-
-        model.setRowCount(++rowCount);
-        model.setValueAt(text, rowCount-1, columnCount);
-    }
-
-    private void addItem(DefaultComboBoxModel model, JTextField textField) {
-        String text = textField.getText();
-        if (model.getIndexOf(text) == -1) {
-            model.addElement(text);
-            textField.setText("");
-        } else {
-            popUpMessage("There is already one!");
-        }
-    }
-
-    private void findItemAndSelectItCheckBox(ArrayList<JCheckBox> checkBoxes, JTextField textField){
-        String text = textField.getText();
-        for (JCheckBox cb : checkBoxes) {
-            if (cb.getText().equals(text)) {
-                if (cb.isSelected()) {
-                    cb.setSelected(false);
-                    return;
-                }
-                cb.setSelected(true);
-                return;
-            }
-        }
-
-        popUpMessage("There is no one!");
-    }
-
-    private void findItemAndSelectItRadioButton(ButtonGroup group, JTextField textField) {
-        String text = textField.getText();
-        Enumeration<AbstractButton> buttonsModels = group.getElements();
-
-        while (buttonsModels.hasMoreElements()) {
-            AbstractButton element = buttonsModels.nextElement();
-            if (element.getText().equals(text)) {
-                ButtonModel buttonModel = element.getModel();
-                if (buttonModel.isSelected()) {
-                    group.clearSelection();
-                    return;
-                }
-                buttonModel.setSelected(true);
-                return;
-            }
-        }
-
-        popUpMessage("There is no one!");
-    }
-
-    private void popUpMessage(String message) {
-        JOptionPane.showMessageDialog(this.frame, message);
     }
 
 }
