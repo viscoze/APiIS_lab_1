@@ -2,7 +2,6 @@ package widget;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.util.ArrayList;
 
 public class MainFrame {
@@ -15,7 +14,6 @@ public class MainFrame {
         ArrayList<JPanel> panels = panelKit.getAllPanels(frame);
 
         initializeFrameSettings();
-        useUIManager();
         initUI(panels);
     }
 
@@ -47,23 +45,24 @@ public class MainFrame {
 
     }
 
-    private void useUIManager() {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            UIManager.put("swing.boldMetal", Boolean.TRUE);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            frame.dispose();
-        }
-    }
-
     private void startCrazy() {
         JPanel mainPanel       = (JPanel)frame.getContentPane().getComponents()[0];
         Component[] allComp    = mainPanel.getComponents();
         JTabbedPane tabbedPane = (JTabbedPane)allComp[1];
+        Component[] panels     = tabbedPane.getComponents();
 
-        Component[] panels = tabbedPane.getComponents();
-        System.out.println(panels.length);
+        for(Component comp : panels ){
+            JPanel p = (JPanel) comp;
+            changingPositionsOfElements(p);
+        }
+    }
+
+    private void changingPositionsOfElements(JPanel panel) {
+        Component[] components = panel.getComponents();
+        for(int i = 0; i < components.length; i++) {
+            components[i].setBackground(Color.CYAN);
+            frame.repaint();
+        }
 
     }
 }
