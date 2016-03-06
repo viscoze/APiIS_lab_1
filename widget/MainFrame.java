@@ -34,6 +34,9 @@ public class MainFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBorder(BorderFactory.createTitledBorder("Choose the task"));
 
+        JButton startCrazy     = new JButton("Start the addition task!");
+        startCrazy.addActionListener(e -> crazyStart());
+
         for(int i = 0; i < 5; i++)
             tabbedPane.addTab(tabsNames[i], panels.get(i));
 
@@ -44,10 +47,20 @@ public class MainFrame {
     private void useUIManager() {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            UIManager.put("swing.boldMetal", Boolean.FALSE);
+            UIManager.put("swing.boldMetal", Boolean.TRUE);
         } catch (Exception ex) {
             ex.printStackTrace();
             frame.dispose();
         }
+    }
+
+    private void crazyStart() {
+        JPanel mainPanel    = (JPanel)frame.getContentPane().getComponents()[0];
+        Component[] allComp = mainPanel.getComponents();
+        JTabbedPane panel   = (JTabbedPane)allComp[0];
+
+        for(int i = 0; i < 5; i++)
+            panel.setSelectedIndex(i);
+
     }
 }

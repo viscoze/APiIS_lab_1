@@ -31,9 +31,7 @@ public class PanelKit {
         DefaultComboBoxModel model   = new DefaultComboBoxModel(new String[] {"Person1"});
         JComboBox<String> comboBox   = new JComboBox<>(model);
 
-        enterButton.addActionListener(e -> {
-            helper.addItem(model, textField);
-        });
+        enterButton.addActionListener(e -> helper.addItem(model, textField));
 
         panel.add(textField);
         panel.add(enterButton);
@@ -86,9 +84,7 @@ public class PanelKit {
             panel.add(radio);
         }
 
-        enterButton.addActionListener(e -> {
-            helper.findItemAndSelectItRadioButton(group, textField);
-        });
+        enterButton.addActionListener(e -> helper.findItemAndSelectItRadioButton(group, textField));
 
         panel.setLayout(new GridLayout(0,3,10,20));
 
@@ -113,9 +109,7 @@ public class PanelKit {
             panel.add(checkBox);
         }
 
-        enterButton.addActionListener(e -> {
-            helper.findItemAndSelectItCheckBox(checkBoxes, textField);
-        });
+        enterButton.addActionListener(e -> helper.findItemAndSelectItCheckBox(checkBoxes, textField));
 
         panel.setLayout(new GridLayout(0,3,10,20));
 
@@ -144,16 +138,11 @@ public class PanelKit {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         JTable table            = new JTable(model);
 
-        toTable.addActionListener(e -> {            helper.addToRow(1, textField, model);
-        });
+        toTable.addActionListener(e -> helper.addToRow(1, textField, model));
 
-        toSecondColumn.addActionListener(e -> {
-            helper.changeColumn(table,  model, 1);
-        });
+        toSecondColumn.addActionListener(e -> helper.changeColumn(table,  model, 1));
 
-        toFirstColumn.addActionListener(e -> {
-            helper.changeColumn(table,  model, 0);
-        });
+        toFirstColumn.addActionListener(e -> helper.changeColumn(table,  model, 0));
 
         gridPanel.add(textField);
         gridPanel.add(toTable);
