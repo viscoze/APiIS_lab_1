@@ -2,6 +2,7 @@ package widget;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.util.ArrayList;
 
 public class MainFrame {
@@ -31,17 +32,19 @@ public class MainFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
         String tabsNames[]     = { "ComboBox","TextField","Radio","Check","Table" };
 
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.setLayout(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createTitledBorder("Choose the task"));
 
         JButton startCrazy     = new JButton("Start the addition task!");
-        startCrazy.addActionListener(e -> crazyStart());
+        startCrazy.addActionListener(e -> startCrazy());
 
         for(int i = 0; i < 5; i++)
             tabbedPane.addTab(tabsNames[i], panels.get(i));
 
-        mainPanel.add(tabbedPane);
+        mainPanel.add(startCrazy, BorderLayout.SOUTH);
+        mainPanel.add(tabbedPane, BorderLayout.CENTER);
         frame.add(mainPanel);
+
     }
 
     private void useUIManager() {
@@ -54,13 +57,13 @@ public class MainFrame {
         }
     }
 
-    private void crazyStart() {
-        JPanel mainPanel    = (JPanel)frame.getContentPane().getComponents()[0];
-        Component[] allComp = mainPanel.getComponents();
-        JTabbedPane panel   = (JTabbedPane)allComp[0];
+    private void startCrazy() {
+        JPanel mainPanel       = (JPanel)frame.getContentPane().getComponents()[0];
+        Component[] allComp    = mainPanel.getComponents();
+        JTabbedPane tabbedPane = (JTabbedPane)allComp[1];
 
-        for(int i = 0; i < 5; i++)
-            panel.setSelectedIndex(i);
+        Component[] panels = tabbedPane.getComponents();
+        System.out.println(panels.length);
 
     }
 }
