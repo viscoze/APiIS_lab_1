@@ -52,16 +52,19 @@ public class MainFrame {
         JTabbedPane tabbedPane = (JTabbedPane)allComp[1];
         Component[] panels     = tabbedPane.getComponents();
 
-        for(Component comp : panels ){
-            JPanel p = (JPanel) comp;
+        for(int i = 0; i < panels.length; i++){
+            JPanel p = (JPanel) panels[i];
             changingPositionsOfElements(p);
+            tabbedPane.setSelectedIndex(i);
         }
     }
 
     private void changingPositionsOfElements(JPanel panel) {
         LinkedList<Component> components = toLinkedList(panel.getComponents());
 
-        frame.repaint();
+        for(int i = 0; i < components.size(); i++) {
+            components.addLast(components.removeFirst());
+        }
     }
 
     private <T> LinkedList<T> toLinkedList(T[] objects) {
