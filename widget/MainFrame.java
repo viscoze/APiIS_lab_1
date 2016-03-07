@@ -59,10 +59,16 @@ public class MainFrame {
 
     private void changingPositionsOfElements(JPanel panel) {
         Component[] components = panel.getComponents();
-        for(int i = 0; i < components.length; i++) {
-            components[i].setBackground(Color.CYAN);
-            frame.repaint();
-        }
+        toArrayList(components);
 
+
+
+        frame.repaint();
+    }
+
+    private <T> ArrayList<T> toArrayList(T[] objects) {
+        ArrayList<T> listOfObjects = new ArrayList<>();
+        for (T obj: objects) listOfObjects.add(obj);
+        return listOfObjects;
     }
 }
