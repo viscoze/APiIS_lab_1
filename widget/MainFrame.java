@@ -4,13 +4,13 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 public class MainFrame {
 
     private JFrame frame;
 
     public MainFrame(PanelKit panelKit) {
-
         this.frame = new JFrame();
         ArrayList<JPanel> panels = panelKit.getAllPanels(frame);
 
@@ -43,7 +43,6 @@ public class MainFrame {
         mainPanel.add(startCrazy, BorderLayout.SOUTH);
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
         frame.add(mainPanel);
-
     }
 
     private void startCrazy() {
@@ -52,11 +51,13 @@ public class MainFrame {
         JTabbedPane tabbedPane = (JTabbedPane)allComp[1];
         Component[] panels     = tabbedPane.getComponents();
 
-        for(int i = 0; i < panels.length; i++){
-            JPanel p = (JPanel) panels[i];
-            changingPositionsOfElements(p);
-            tabbedPane.setSelectedIndex(i);
-        }
+        EventQueue.invokeLater(() -> {
+            for(int i = 0; i < panels.length; i++) {
+                JPanel p = (JPanel) panels[i];
+                changingPositionsOfElements(p);
+                tabbedPane.setSelectedIndex(i);
+            }
+        });
     }
 
     private void changingPositionsOfElements(JPanel panel) {
@@ -64,12 +65,21 @@ public class MainFrame {
 
         for(int i = 0; i < components.size(); i++) {
             components.addLast(components.removeFirst());
+            panel.revalidate();
         }
     }
 
     private <T> LinkedList<T> toLinkedList(T[] objects) {
         LinkedList<T> listOfObjects = new LinkedList<>();
-        for (T obj: objects) listOfObjects.add(obj);
+        for(T obj: objects) listOfObjects.add(obj);
         return listOfObjects;
+    }
+
+    private void delayProcess(int time) {
+        try {
+            TimeUnit.SECONDS.sleep(time);
+        } catch (Exception e) {
+            frame.dispose();
+        }
     }
 }
