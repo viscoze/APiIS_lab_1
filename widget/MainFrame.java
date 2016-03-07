@@ -3,6 +3,7 @@ package widget;
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MainFrame {
 
@@ -58,16 +59,13 @@ public class MainFrame {
     }
 
     private void changingPositionsOfElements(JPanel panel) {
-        Component[] components = panel.getComponents();
-        toArrayList(components);
-
-
+        LinkedList<Component> components = toLinkedList(panel.getComponents());
 
         frame.repaint();
     }
 
-    private <T> ArrayList<T> toArrayList(T[] objects) {
-        ArrayList<T> listOfObjects = new ArrayList<>();
+    private <T> LinkedList<T> toLinkedList(T[] objects) {
+        LinkedList<T> listOfObjects = new LinkedList<>();
         for (T obj: objects) listOfObjects.add(obj);
         return listOfObjects;
     }
