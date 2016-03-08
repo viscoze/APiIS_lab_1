@@ -4,7 +4,6 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
 public class MainFrame {
 
@@ -64,12 +63,13 @@ public class MainFrame {
 
     private void changingPositionsOfElements(JPanel panel) {
         LinkedList<Component> components = toLinkedList(panel.getComponents());
-
+        wait1second();
         for(int i = 0; i < components.size(); i++) {
             components.addLast(components.removeFirst());
             rebuild(components, panel);
             wait1second();
         }
+        wait1second();
     }
 
     private <T> LinkedList<T> toLinkedList(T[] objects) {
