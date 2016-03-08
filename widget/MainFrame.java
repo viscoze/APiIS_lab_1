@@ -51,13 +51,15 @@ public class MainFrame {
         JTabbedPane tabbedPane = (JTabbedPane)allComp[1];
         Component[] panels     = tabbedPane.getComponents();
 
-        EventQueue.invokeLater(() -> {
+        Thread t = new Thread(() -> {
             for(int i = 0; i < panels.length; i++) {
                 JPanel p = (JPanel) panels[i];
+                tabbedPane.setSelectedIndex(i);
                 changingPositionsOfElements(p);
-                //tabbedPane.setSelectedIndex(i);
             }
         });
+
+        t.start();
     }
 
     private void changingPositionsOfElements(JPanel panel) {
@@ -65,9 +67,8 @@ public class MainFrame {
 
         for(int i = 0; i < components.size(); i++) {
             components.addLast(components.removeFirst());
-            panel.removeAll();
-            addToPanel(components, panel);
-            rebuild(panel);
+            rebuild(components, panel);
+            wait1second();
         }
     }
 
@@ -77,20 +78,16 @@ public class MainFrame {
         return listOfObjects;
     }
 
-    private void delayProcess(int time) {
-        try {
-            TimeUnit.SECONDS.sleep(time);
-        } catch (Exception e) {
-            frame.dispose();
-        }
-    }
-
-    private void rebuild(JPanel panel) {
+    private void rebuild(LinkedList<Component> components, JPanel panel) {
+        panel.removeAll();
+        for(Component component : components) panel.add(component);
         panel.revalidate();
         frame.repaint();
     }
 
-    private void addToPanel(LinkedList<Component> components, JPanel panel) {
-        for(Component component : components) panel.add(component);
+    public static void wait1second() {
+        long now = System.currentTimeMillis();
+        long then = now + 1000;
+        while (System.currentTimeMillis() < then) {}
     }
 }
