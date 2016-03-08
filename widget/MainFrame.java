@@ -55,7 +55,7 @@ public class MainFrame {
             for(int i = 0; i < panels.length; i++) {
                 JPanel p = (JPanel) panels[i];
                 changingPositionsOfElements(p);
-                tabbedPane.setSelectedIndex(i);
+                //tabbedPane.setSelectedIndex(i);
             }
         });
     }
@@ -65,7 +65,9 @@ public class MainFrame {
 
         for(int i = 0; i < components.size(); i++) {
             components.addLast(components.removeFirst());
-            panel.revalidate();
+            panel.removeAll();
+            addToPanel(components, panel);
+            rebuild(panel);
         }
     }
 
@@ -81,5 +83,14 @@ public class MainFrame {
         } catch (Exception e) {
             frame.dispose();
         }
+    }
+
+    private void rebuild(JPanel panel) {
+        panel.revalidate();
+        frame.repaint();
+    }
+
+    private void addToPanel(LinkedList<Component> components, JPanel panel) {
+        for(Component component : components) panel.add(component);
     }
 }
