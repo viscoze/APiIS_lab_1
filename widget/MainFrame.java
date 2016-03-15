@@ -36,8 +36,8 @@ public class MainFrame {
         JButton startCrazy     = new JButton("Start the addition task!");
         startCrazy.addActionListener(e -> startCrazy());
 
-        for(int i = 0; i < 5; i++)
-            tabbedPane.addTab(tabsNames[i], panels.get(i));
+        for(int indexOfTabsName = 0; indexOfTabsName < 5; indexOfTabsName++)
+            tabbedPane.addTab(tabsNames[indexOfTabsName], panels.get(indexOfTabsName));
 
         mainPanel.add(startCrazy, BorderLayout.SOUTH);
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
@@ -50,10 +50,11 @@ public class MainFrame {
         JTabbedPane tabbedPane = (JTabbedPane)allComp[1];
         Component[] panels     = tabbedPane.getComponents();
 
+
         Thread t = new Thread(() -> {
-            for(int i = 0; i < panels.length; i++) {
-                JPanel p = (JPanel) panels[i];
-                tabbedPane.setSelectedIndex(i);
+            for(int indexOfTab = 0; indexOfTab < panels.length; indexOfTab++) {
+                JPanel p = (JPanel) panels[indexOfTab];
+                tabbedPane.setSelectedIndex(indexOfTab);
                 changingPositionsOfElements(p);
             }
         });
@@ -86,8 +87,10 @@ public class MainFrame {
     }
 
     public static void wait1second() {
-        long now = System.currentTimeMillis();
-        long then = now + 1000;
-        while (System.currentTimeMillis() < then) {}
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
